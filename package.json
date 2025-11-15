@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:analyze": "vite build --mode analyze"
   },
   "keywords": [
     "weather",
@@ -20,5 +21,9 @@
   "packageManager": "pnpm@10.22.0",
   "dependencies": {
     "vite": "^7.2.2"
+  },
+  "devDependencies": {
+    "terser": "^5.44.1",
+    "vite-plugin-compression": "^0.5.1"
   }
 }
