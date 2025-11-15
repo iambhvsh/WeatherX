@@ -24,7 +24,7 @@ A modern, responsive weather application built with Material Design 3 (Material 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/weatherx.git
+git clone https://github.com/iambhvsh/weatherx.git
 cd weatherx
 ```
 
@@ -133,10 +133,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Icons from [Material Symbols](https://fonts.google.com/icons)
 - Design inspired by [Material Design 3](https://m3.material.io/)
 
-## 📸 Screenshots
-
-![WeatherX Screenshot](screenshot.png)
-
 ---
 
-Made with ❤️ using Material Design 3
+Made with ❤️ by Bhavesh Patil
