@@ -1,0 +1,24 @@
+{
+  "name": "weatherx",
+  "version": "1.2.0",
+  "description": "Modern weather application with AI-powered insights using Material Design 3",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "weather",
+    "material-design",
+    "ai",
+    "gemini",
+    "pwa"
+  ],
+  "author": "Bhavesh Patil",
+  "license": "MIT",
+  "packageManager": "pnpm@10.22.0",
+  "dependencies": {
+    "vite": "^7.2.2"
+  }
+}

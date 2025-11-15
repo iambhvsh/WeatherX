@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  WeatherX - Modern Weather Application
+  ============================================================================
+  
+  Description: A modern, responsive weather application built with Material 
+               Design 3 (Material You) principles
+  
+  Features:
+    - Real-time weather data from Open-Meteo API
+    - AI-powered weather insights using Google Gemini
+    - Dynamic theming with multiple color schemes
+    - Light, Dark, and AMOLED display modes
+    - 7-day weather forecast
+    - Hourly weather updates
+    - Location search functionality
+    - Responsive design for all devices
+  
+  Technologies:
+    - HTML5
+    - CSS3 with Material Design 3
+    - Vanilla JavaScript
+    - Tailwind CSS for utility classes
+    - Google Gemini AI API
+    - Open-Meteo Weather API
+  
+  Author: Bhavesh Patil
+  Version: 1.2
+  License: MIT
+  
+  ============================================================================
+-->
+<html lang="en" data-theme="m3-purple" class="light">
+
+<head>
+  <!-- ========================================================================
+       META TAGS & CONFIGURATION
+       ======================================================================== -->
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F2FA">
+  <meta name="description" content="Modern weather app with AI-powered insights, 7-day forecasts, and beautiful Material You design">
+  <meta name="keywords" content="weather, forecast, AI, Material Design, weather app">
+  <meta name="author" content="Bhavesh Patil">
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="WeatherX - Modern Weather App">
+  <meta property="og:description" content="Get accurate weather forecasts with AI-powered insights">
+  <meta property="og:type" content="website">
+  
+  <!-- Apple Mobile Web App -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WeatherX">
+  
+  <title>WeatherX - Modern Weather App</title>
+  
+  <!-- ========================================================================
+       EXTERNAL RESOURCES
+       ======================================================================== -->
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts - Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  
+  <!-- Marked.js for Markdown parsing in AI responses -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/assets/styles.css">
+  
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      content: ["./*.html"],
+      theme: {
+        extend: {
+          colors: {
+            'primary': 'var(--primary)',
+            'on-primary': 'var(--on-primary)',
+            'primary-container': 'var(--primary-container)',
+            'on-primary-container': 'var(--on-primary-container)',
+            'secondary': 'var(--secondary)',
+            'on-secondary': 'var(--on-secondary)',
+            'secondary-container': 'var(--secondary-container)',
+            'on-secondary-container': 'var(--on-secondary-container)',
+            'tertiary': 'var(--tertiary)',
+            'on-tertiary': 'var(--on-tertiary)',
+            'tertiary-container': 'var(--tertiary-container)',
+            'on-tertiary-container': 'var(--on-tertiary-container)',
+            'surface-container-lowest': 'var(--surface-container-lowest)',
+            'surface-container-low': 'var(--surface-container-low)',
+            'surface-container': 'var(--surface-container)',
+            'surface-container-high': 'var(--surface-container-high)',
+            'surface-container-highest': 'var(--surface-container-highest)',
+            'on-surface': 'var(--on-surface)',
+            'on-surface-variant': 'var(--on-surface-variant)',
+            'outline': 'var(--outline)',
+            'outline-variant': 'var(--outline-variant)',
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.25rem',
+            '3xl': '1.75rem',
+            'full': '9999px',
+          },
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="text-on-surface antialiased">
+  
+  <!-- ========================================================================
+       TOP APP BAR
+       Fixed header with app title and action buttons
+       ======================================================================== -->
+  
+  <header id="top-app-bar" class="fixed top-0 left-0 right-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 h-full flex items-center">
+      <!-- App Title -->
+      <h1 id="app-bar-title" class="text-on-surface">WeatherX</h1>
+      
+      <!-- Action Buttons -->
+      <div id="app-bar-actions" class="ml-auto flex items-center">
+        <!-- Search Button -->
+        <button id="search-icon-btn" class="interactive w-12 h-12 flex items-center justify-center rounded-full" aria-label="Search location">
+          <span class="material-symbols-outlined text-on-surface-variant">search</span>
+        </button>
+        
+        <!-- Settings Button -->
+        <button id="settings-toggle" class="interactive w-12 h-12 flex items-center justify-center rounded-full" aria-label="Open settings">
+          <span class="material-symbols-outlined text-on-surface-variant">settings</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <!-- ========================================================================
+       MAIN CONTENT AREA
+       Scrollable container for weather information
+       ======================================================================== -->
+  
+  <div id="main-scroll-container" class="h-screen w-screen overflow-y-auto">
+    <main id="main-content" class="max-w-5xl mx-auto px-4 pt-24 pb-4">
+      
+      <!-- Loading Indicator -->
+      <div id="loading" class="w-full flex justify-center mt-8 text-on-surface-variant">
+        <div class="flex flex-col items-center gap-3">
+          <span class="type-body-large">Loading weather data...</span>
+        </div>
+      </div>
+      
+      <!-- Error Message -->
+      <div id="error-message" class="max-w-xl mx-auto mt-[-48px] mb-4 p-4 bg-red-500/10 text-red-600 dark:text-red-400 rounded-2xl hidden type-body-large text-center"></div>
+      
+      <!-- Weather Content Section -->
+      <section id="weather-content" class="opacity-0 transition-opacity duration-500">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+          
+          <!-- Left Column: Current Weather & Details -->
+          <div class="lg:col-span-2">
+            
+            <!-- Current Weather Card -->
+            <div class="interactive m3-card bg-primary-container p-6 rounded-3xl text-on-primary-container animate-fade-in mb-6" style="animation-delay: 0.2s;">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h2 id="location" class="type-headline-medium">--</h2>
+                  <p id="current-condition" class="type-body-large capitalize text-on-primary-container/80">--</p>
+                </div>
+                <div id="current-icon" class="w-20 h-20 text-primary -mt-2 -mr-2"></div>
+              </div>
+              <div class="flex items-end gap-2 mt-2">
+                <span id="current-temp" class="type-display-large leading-none">-°</span>
+                <span id="feels-like" class="type-body-large text-on-primary-container/80 pb-2">Feels like -°</span>
+              </div>
+            </div>
+            
+            <!-- AI Summary Card -->
+            <div id="ai-summary-card" class="interactive m3-card bg-surface-container p-6 rounded-3xl animate-fade-in mb-6" style="animation-delay: 0.3s;">
+              <h3 class="type-title-medium mb-4 text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                Daily Summary
+              </h3>
+              <p id="ai-summary-text" class="type-body-large text-on-surface-variant">Generating summary...</p>
+            </div>
+            
+            <!-- Weather Details Grid (Bento Grid) -->
+            <div id="bento-grid" class="grid grid-cols-4 gap-4 mb-6"></div>
+          </div>
+          
+          <!-- Right Column: Forecasts -->
+          <div class="lg:col-span-1">
+            
+            <!-- Hourly Forecast Card -->
+            <div class="interactive m3-card bg-surface-container p-6 rounded-3xl animate-fade-in mb-6" style="animation-delay: 0.3s;">
+              <h3 class="type-title-medium mb-4 text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined">schedule</span>
+                Hourly Forecast
+              </h3>
+              <div id="hourly-forecast-container" class="flex gap-4 overflow-x-auto pb-2 -mx-6 px-6"></div>
+            </div>
+            
+            <!-- 7-Day Forecast Card -->
+            <div class="interactive m3-card bg-surface-container p-6 rounded-3xl animate-fade-in mb-6" style="animation-delay: 0.4s;">
+              <h3 class="type-title-medium mb-4 text-on-surface flex items-center gap-2">
+                <span class="material-symbols-outlined">calendar_month</span>
+                7-Day Forecast
+              </h3>
+              <div id="daily-forecast-container" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <!-- ========================================================================
+       SEARCH VIEW
+       Full-screen location search interface
+       ======================================================================== -->
+  
+  <div id="search-view" class="fixed inset-0 bg-surface-container-low z-40 hidden opacity-0">
+    <div class="pt-[env(safe-area-inset-top)] px-2">
+      
+      <!-- Search Form -->
+      <form id="search-form" class="flex items-center mt-2 mb-4" onsubmit="return false;">
+        <!-- Back Button -->
+        <button type="button" id="search-back-btn" class="interactive w-12 h-12 flex items-center justify-center rounded-full" aria-label="Close search">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        
+        <!-- Search Input -->
+        <input 
+          type="search" 
+          id="search-input" 
+          placeholder="Search for a city..." 
+          class="type-body-large flex-1 h-12 bg-transparent focus:outline-none"
+          autocomplete="off"
+        >
+      </form>
+      
+      <!-- Search Results Container -->
+      <div id="search-results" class="px-2"></div>
+    </div>
+  </div>
+  
+  <!-- ========================================================================
+       SETTINGS MODAL
+       Bottom sheet for app configuration
+       ======================================================================== -->
+  
+  <div id="settings-modal" class="fixed inset-0 z-50 flex flex-col justify-end pointer-events-none">
+    <!-- Overlay -->
+    <div id="settings-overlay" class="absolute inset-0 bg-black/30 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+    
+    <!-- Modal Content -->
+    <div id="settings-content-wrapper" class="settings-content w-full rounded-t-3xl shadow-2xl transform translate-y-full pointer-events-auto max-h-[80vh] bg-surface-container-low">
+      <!-- Drag Handle -->
+      <div class="w-10 h-1.5 bg-outline mx-auto rounded-full my-2"></div>
+      
+      <!-- Scrollable Content -->
+      <div class="overflow-y-auto max-h-[calc(80vh-2rem)] p-4 pt-0">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between px-2 mb-4">
+          <h2 class="type-headline-medium text-on-surface">Settings</h2>
+          <button id="settings-close-btn" class="interactive w-12 h-12 flex items-center justify-center rounded-full -mr-2" aria-label="Close settings">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        
+        <!-- Theme Mode Selection -->
+        <div class="px-2 mb-6">
+          <h3 class="type-title-medium text-primary mb-3">Theme</h3>
+          <div class="bg-surface-container-high p-1 rounded-full flex items-center">
+            <button data-theme-mode="light" class="theme-mode-btn flex-1 py-2 rounded-full type-label-large">Light</button>
+            <button data-theme-mode="dark" class="theme-mode-btn flex-1 py-2 rounded-full type-label-large">Dark</button>
+            <button data-theme-mode="amoled" class="theme-mode-btn flex-1 py-2 rounded-full type-label-large">AMOLED</button>
+          </div>
+        </div>
+        
+        <!-- Accent Color Selection -->
+        <div class="px-2 mb-6">
+          <h3 class="type-title-medium text-primary mb-3">Accent Color</h3>
+          <div class="flex items-center justify-around bg-surface-container-high p-3 rounded-2xl">
+            <button class="color-swatch interactive w-10 h-10 rounded-full border-2" data-theme="m3-purple" style="background-color: #6750A4;" aria-label="Purple theme"></button>
+            <button class="color-swatch interactive w-10 h-10 rounded-full border-2" data-theme="m3-blue" style="background-color: #0061A4;" aria-label="Blue theme"></button>
+            <button class="color-swatch interactive w-10 h-10 rounded-full border-2" data-theme="m3-green" style="background-color: #386A20;" aria-label="Green theme"></button>
+            <button class="color-swatch interactive w-10 h-10 rounded-full border-2" data-theme="m3-orange" style="background-color: #8C5100;" aria-label="Orange theme"></button>
+            <button class="color-swatch interactive w-10 h-10 rounded-full border-2" data-theme="m3-red" style="background-color: #B3261E;" aria-label="Red theme"></button>
+          </div>
+        </div>
+        
+        <!-- API Key Configuration -->
+        <div class="px-2 mb-6">
+          <h3 class="type-title-medium text-primary mb-3">Google Gemini API Key</h3>
+          <form id="api-key-form" class="flex items-center gap-2" onsubmit="return false;">
+            <input 
+              type="password" 
+              id="settings-gemini-api-key" 
+              placeholder="Enter your API key" 
+              class="type-body-large flex-1 h-12 bg-surface-container-high px-4 rounded-lg focus:outline-none" 
+              autocomplete="off"
+            >
+            <button type="submit" id="save-api-key-btn" class="interactive h-12 px-4 rounded-lg bg-secondary-container text-on-secondary-container type-label-large transition-all duration-200">
+              Save
+            </button>
+          </form>
+        </div>
+        
+        <!-- About Section -->
+        <div class="px-2 mb-4">
+          <h3 class="type-title-medium text-primary mb-3">About</h3>
+          <div class="text-center bg-surface-container-high p-6 rounded-2xl">
+            <div class="w-16 h-16 bg-primary mx-auto mb-4 rounded-3xl flex items-center justify-center text-on-primary">
+              <span class="material-symbols-outlined !text-4xl">cloudy</span>
+            </div>
+            <h4 class="type-title-medium text-on-surface">WeatherX</h4>
+            <p class="type-body-large text-on-surface-variant mb-1">Version 1.2</p>
+            <p class="type-body-large text-on-surface-variant mb-4">Weather app based on Material You 3</p>
+            <p class="type-label-large text-on-surface-variant">
+              Created by 
+              <a href="https://github.com/iambhvsh" target="_blank" rel="noopener noreferrer" class="font-medium text-primary hover:underline">
+                Bhavesh Patil
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ========================================================================
+       AI FLOATING ACTION BUTTON (FAB)
+       Opens the AI chat interface
+       ======================================================================== -->
+  
+  <button id="ai-fab" class="interactive fixed bottom-6 right-6 z-30 w-16 h-16 bg-primary-container rounded-2xl shadow-lg flex items-center justify-center text-on-primary-container" aria-label="Open AI assistant">
+    <span class="material-symbols-outlined">auto_awesome</span>
+  </button>
+  
+  <!-- ========================================================================
+       AI CHAT MODAL
+       Bottom sheet for AI-powered weather assistant
+       ======================================================================== -->
+  
+  <div id="ai-modal" class="fixed inset-0 z-50 flex flex-col justify-end pointer-events-none">
+    <!-- Overlay -->
+    <div id="ai-modal-overlay" class="absolute inset-0 bg-black/30 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+    
+    <!-- Modal Content -->
+    <div id="ai-modal-content-wrapper" class="w-full rounded-t-3xl shadow-2xl transform translate-y-full pointer-events-auto max-h-[85vh] bg-surface-container-low">
+      <!-- Drag Handle -->
+      <div class="w-10 h-1.5 bg-outline mx-auto rounded-full my-2"></div>
+      
+      <div class="flex flex-col max-h-[calc(85vh-2rem)]">
+        
+        <!-- Header -->
+        <div class="flex-shrink-0 p-4 pb-0">
+          <div class="flex items-center justify-between px-2 mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-on-primary !text-xl">auto_awesome</span>
+              </div>
+              <div>
+                <h2 class="type-title-large text-on-surface">Ask Gemini</h2>
+                <p class="type-label-small text-on-surface-variant">Powered by Gemini 2.5 Flash</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <!-- New Conversation Button -->
+              <button id="ai-clear-btn" class="interactive w-10 h-10 flex items-center justify-center rounded-full" title="New conversation" aria-label="Start new conversation">
+                <span class="material-symbols-outlined text-on-surface-variant !text-xl">add</span>
+              </button>
+              <!-- Close Button -->
+              <button id="ai-modal-close-btn" class="interactive w-10 h-10 flex items-center justify-center rounded-full" aria-label="Close AI assistant">
+                <span class="material-symbols-outlined text-on-surface-variant !text-xl">close</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Conversation Area -->
+        <div class="flex-1 overflow-y-auto px-6 pb-4" id="conversation-scroll-area">
+          
+          <!-- Welcome Message -->
+          <div id="ai-welcome-message" class="text-center py-8">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="material-symbols-outlined text-primary !text-4xl">partly_cloudy_day</span>
+            </div>
+            <h3 class="type-title-medium text-on-surface mb-2">Ask me anything about the weather</h3>
+            <p class="type-body-medium text-on-surface-variant max-w-sm mx-auto">
+              I can help you plan your day, suggest what to wear, or answer any weather-related questions.
+            </p>
+          </div>
+          
+          <!-- Conversation Container (populated dynamically) -->
+          <div id="gemini-conversation-container" class="hidden space-y-4"></div>
+        </div>
+        
+        <!-- Input Area -->
+        <div class="flex-shrink-0 p-4 pt-2 border-t border-outline-variant">
+          <div class="px-2">
+            
+            <!-- Quick Prompts -->
+            <div id="quick-prompts-container" class="mb-3">
+              <div class="flex gap-2 overflow-x-auto">
+                <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-2 bg-surface-container-high rounded-full type-label-medium text-on-surface flex items-center gap-1.5" data-prompt="What should I wear today?">
+                  <span class="material-symbols-outlined !text-base">checkroom</span>
+                  What to wear?
+                </button>
+                <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-2 bg-surface-container-high rounded-full type-label-medium text-on-surface flex items-center gap-1.5" data-prompt="Will it rain today?">
+                  <span class="material-symbols-outlined !text-base">rainy</span>
+                  Will it rain?
+                </button>
+                <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-2 bg-surface-container-high rounded-full type-label-medium text-on-surface flex items-center gap-1.5" data-prompt="Compare today with tomorrow">
+                  <span class="material-symbols-outlined !text-base">compare_arrows</span>
+                  Compare
+                </button>
+              </div>
+            </div>
+            
+            <!-- Message Input -->
+            <div class="flex items-center gap-2">
+              <textarea 
+                id="ai-input" 
+                rows="1" 
+                placeholder="Ask about the weather..." 
+                class="type-body-large flex-1 h-12 bg-surface-container-high px-4 py-3 rounded-2xl focus:outline-none resize-none overflow-hidden"
+                maxlength="500"
+              ></textarea>
+              <button id="ai-send-btn" class="interactive w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-primary text-on-primary transition-all duration-200 disabled:opacity-50 disabled:bg-surface-container" disabled aria-label="Send message">
+                <span class="material-symbols-outlined">send</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       JAVASCRIPT
+       Main application logic
+       ======================================================================== -->
+  
+  <script type="module" src="/assets/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,945 @@
+/**
+ * Weather App - Styles
+ * Material Design 3 (Material You) implementation with dynamic theming
+ * Features: Multiple color themes, light/dark/amoled modes, responsive design
+ */
+
+/* ============================================================================
+   ROOT VARIABLES & ANIMATIONS
+   ============================================================================ */
+
+:root {
+  --m3-easing-emphasized: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --m3-duration-short: 300ms;
+  --m3-duration-medium: 500ms;
+}
+
+/* ============================================================================
+   MATERIAL 3 COLOR THEMES - PURPLE
+   ============================================================================ */
+
+html[data-theme="m3-purple"] {
+  --seed-color: #6750A4;
+  --md-sys-color-primary-light-rgb: 103, 80, 164;
+  --md-sys-color-primary-light: #6750A4;
+  --md-sys-color-on-primary-light: #FFFFFF;
+  --md-sys-color-primary-container-light: #EADDFF;
+  --md-sys-color-on-primary-container-light: #21005D;
+  --md-sys-color-secondary-light: #625B71;
+  --md-sys-color-on-secondary-light: #FFFFFF;
+  --md-sys-color-secondary-container-light: #E8DEF8;
+  --md-sys-color-on-secondary-container-light: #1D192B;
+  --md-sys-color-tertiary-light: #7D5260;
+  --md-sys-color-on-tertiary-light: #FFFFFF;
+  --md-sys-color-tertiary-container-light: #FFD8E4;
+  --md-sys-color-on-tertiary-container-light: #31111D;
+  --md-sys-color-surface-container-lowest-light: #FFFFFF;
+  --md-sys-color-surface-container-low-light: #F7F2FA;
+  --md-sys-color-surface-container-light: #F3EDF7;
+  --md-sys-color-surface-container-high-light: #E8E2EB;
+  --md-sys-color-surface-container-highest-light: #E6E0E9;
+  --md-sys-color-on-surface-light: #1D1B20;
+  --md-sys-color-on-surface-variant-light: #49454F;
+  --md-sys-color-outline-light: #79747E;
+  --md-sys-color-outline-variant-light: #CAC4D0;
+  --md-sys-color-primary-dark-rgb: 208, 188, 255;
+  --md-sys-color-primary-dark: #D0BCFF;
+  --md-sys-color-on-primary-dark: #381E72;
+  --md-sys-color-primary-container-dark: #4F378B;
+  --md-sys-color-on-primary-container-dark: #EADDFF;
+  --md-sys-color-secondary-dark: #CCC2DC;
+  --md-sys-color-on-secondary-dark: #332D41;
+  --md-sys-color-secondary-container-dark: #4A4458;
+  --md-sys-color-on-secondary-container-dark: #E8DEF8;
+  --md-sys-color-tertiary-dark: #EFB8C8;
+  --md-sys-color-on-tertiary-dark: #492532;
+  --md-sys-color-tertiary-container-dark: #633B48;
+  --md-sys-color-on-tertiary-container-dark: #FFD8E4;
+  --md-sys-color-surface-container-lowest-dark: #0F0D13;
+  --md-sys-color-surface-container-low-dark: #1D1B20;
+  --md-sys-color-surface-container-dark: #211F26;
+  --md-sys-color-surface-container-high-dark: #2B2930;
+  --md-sys-color-surface-container-highest-dark: #36343B;
+  --md-sys-color-on-surface-dark: #E6E0E9;
+  --md-sys-color-on-surface-variant-dark: #CAC4D0;
+  --md-sys-color-outline-dark: #938F99;
+  --md-sys-color-outline-variant-dark: #49454F;
+}
+
+/* ============================================================================
+   MATERIAL 3 COLOR THEMES - BLUE
+   ============================================================================ */
+
+html[data-theme="m3-blue"] {
+  --seed-color: #0061A4;
+  --md-sys-color-primary-light-rgb: 0, 97, 164;
+  --md-sys-color-primary-light: #0061A4;
+  --md-sys-color-on-primary-light: #FFFFFF;
+  --md-sys-color-primary-container-light: #D1E4FF;
+  --md-sys-color-on-primary-container-light: #001D36;
+  --md-sys-color-secondary-light: #535F70;
+  --md-sys-color-on-secondary-light: #FFFFFF;
+  --md-sys-color-secondary-container-light: #D7E3F7;
+  --md-sys-color-on-secondary-container-light: #101C2B;
+  --md-sys-color-tertiary-light: #6B5778;
+  --md-sys-color-on-tertiary-light: #FFFFFF;
+  --md-sys-color-tertiary-container-light: #F2DAFF;
+  --md-sys-color-on-tertiary-container-light: #251431;
+  --md-sys-color-surface-container-lowest-light: #FFFFFF;
+  --md-sys-color-surface-container-low-light: #F3F4F6;
+  --md-sys-color-surface-container-light: #EFF1F3;
+  --md-sys-color-surface-container-high-light: #E9ECEF;
+  --md-sys-color-surface-container-highest-light: #E3E6E8;
+  --md-sys-color-on-surface-light: #1A1C1E;
+  --md-sys-color-on-surface-variant-light: #42474E;
+  --md-sys-color-outline-light: #73777F;
+  --md-sys-color-outline-variant-light: #C2C7CF;
+  --md-sys-color-primary-dark-rgb: 158, 202, 255;
+  --md-sys-color-primary-dark: #9ECAFF;
+  --md-sys-color-on-primary-dark: #003258;
+  --md-sys-color-primary-container-dark: #00497D;
+  --md-sys-color-on-primary-container-dark: #D1E4FF;
+  --md-sys-color-secondary-dark: #BBC7DB;
+  --md-sys-color-on-secondary-dark: #253141;
+  --md-sys-color-secondary-container-dark: #3B4858;
+  --md-sys-color-on-secondary-container-dark: #D7E3F7;
+  --md-sys-color-tertiary-dark: #D6BEE4;
+  --md-sys-color-on-tertiary-dark: #3B2948;
+  --md-sys-color-tertiary-container-dark: #523F5F;
+  --md-sys-color-on-tertiary-container-dark: #F2DAFF;
+  --md-sys-color-surface-container-lowest-dark: #0F1113;
+  --md-sys-color-surface-container-low-dark: #1A1C1E;
+  --md-sys-color-surface-container-dark: #1E2022;
+  --md-sys-color-surface-container-high-dark: #282A2D;
+  --md-sys-color-surface-container-highest-dark: #333538;
+  --md-sys-color-on-surface-dark: #E2E2E6;
+  --md-sys-color-on-surface-variant-dark: #C2C7CF;
+  --md-sys-color-outline-dark: #8D9199;
+  --md-sys-color-outline-variant-dark: #42474E;
+}
+
+/* ============================================================================
+   MATERIAL 3 COLOR THEMES - GREEN
+   ============================================================================ */
+
+html[data-theme="m3-green"] {
+  --seed-color: #386A20;
+  --md-sys-color-primary-light-rgb: 56, 106, 32;
+  --md-sys-color-primary-light: #386A20;
+  --md-sys-color-on-primary-light: #FFFFFF;
+  --md-sys-color-primary-container-light: #B7F397;
+  --md-sys-color-on-primary-container-light: #072100;
+  --md-sys-color-secondary-light: #55624C;
+  --md-sys-color-on-secondary-light: #FFFFFF;
+  --md-sys-color-secondary-container-light: #D9E7CA;
+  --md-sys-color-on-secondary-container-light: #131F0D;
+  --md-sys-color-tertiary-light: #386666;
+  --md-sys-color-on-tertiary-light: #FFFFFF;
+  --md-sys-color-tertiary-container-light: #BBEBEB;
+  --md-sys-color-on-tertiary-container-light: #002020;
+  --md-sys-color-surface-container-lowest-light: #FFFFFF;
+  --md-sys-color-surface-container-low-light: #F4F5F0;
+  --md-sys-color-surface-container-light: #EEF1EA;
+  --md-sys-color-surface-container-high-light: #E8EBE5;
+  --md-sys-color-surface-container-highest-light: #E2E5DF;
+  --md-sys-color-on-surface-light: #1A1C18;
+  --md-sys-color-on-surface-variant-light: #44483F;
+  --md-sys-color-outline-light: #74796D;
+  --md-sys-color-outline-variant-light: #C4C8BB;
+  --md-sys-color-primary-dark-rgb: 156, 214, 125;
+  --md-sys-color-primary-dark: #9CD67D;
+  --md-sys-color-on-primary-dark: #0E3900;
+  --md-sys-color-primary-container-dark: #205107;
+  --md-sys-color-on-primary-container-dark: #B7F397;
+  --md-sys-color-secondary-dark: #BDCBAF;
+  --md-sys-color-on-secondary-dark: #283420;
+  --md-sys-color-secondary-container-dark: #3E4A35;
+  --md-sys-color-on-secondary-container-dark: #D9E7CA;
+  --md-sys-color-tertiary-dark: #A0CFCF;
+  --md-sys-color-on-tertiary-dark: #003737;
+  --md-sys-color-tertiary-container-dark: #1E4E4E;
+  --md-sys-color-on-tertiary-container-dark: #BBEBEB;
+  --md-sys-color-surface-container-lowest-dark: #0F110C;
+  --md-sys-color-surface-container-low-dark: #1A1C18;
+  --md-sys-color-surface-container-dark: #1E201C;
+  --md-sys-color-surface-container-high-dark: #282B26;
+  --md-sys-color-surface-container-highest-dark: #333630;
+  --md-sys-color-on-surface-dark: #E2E3DC;
+  --md-sys-color-on-surface-variant-dark: #C4C8BB;
+  --md-sys-color-outline-dark: #8E9286;
+  --md-sys-color-outline-variant-dark: #44483F;
+}
+
+/* ============================================================================
+   MATERIAL 3 COLOR THEMES - RED
+   ============================================================================ */
+
+html[data-theme="m3-red"] {
+  --seed-color: #B3261E;
+  --md-sys-color-primary-light-rgb: 179, 38, 30;
+  --md-sys-color-primary-light: #B3261E;
+  --md-sys-color-on-primary-light: #FFFFFF;
+  --md-sys-color-primary-container-light: #F9DEDC;
+  --md-sys-color-on-primary-container-light: #410002;
+  --md-sys-color-secondary-light: #795548;
+  --md-sys-color-on-secondary-light: #FFFFFF;
+  --md-sys-color-secondary-container-light: #F9DEDC;
+  --md-sys-color-on-secondary-container-light: #271916;
+  --md-sys-color-tertiary-light: #755B1F;
+  --md-sys-color-on-tertiary-light: #FFFFFF;
+  --md-sys-color-tertiary-container-light: #F9DEDC;
+  --md-sys-color-on-tertiary-container-light: #271916;
+  --md-sys-color-surface-container-lowest-light: #FFFFFF;
+  --md-sys-color-surface-container-low-light: #F9F3F2;
+  --md-sys-color-surface-container-light: #F3EEED;
+  --md-sys-color-surface-container-high-light: #E8E3E2;
+  --md-sys-color-surface-container-highest-light: #E2DEDD;
+  --md-sys-color-on-surface-light: #1C1B1A;
+  --md-sys-color-on-surface-variant-light: #444746;
+  --md-sys-color-outline-light: #747775;
+  --md-sys-color-outline-variant-light: #C4C6C5;
+  --md-sys-color-primary-dark-rgb: 242, 184, 181;
+  --md-sys-color-primary-dark: #F2B8B5;
+  --md-sys-color-on-primary-dark: #690005;
+  --md-sys-color-primary-container-dark: #93000A;
+  --md-sys-color-on-primary-container-dark: #F9DEDC;
+  --md-sys-color-secondary-dark: #E7BDB3;
+  --md-sys-color-on-secondary-dark: #442920;
+  --md-sys-color-secondary-container-dark: #5D4037;
+  --md-sys-color-on-secondary-container-dark: #F9DEDC;
+  --md-sys-color-tertiary-dark: #E7C28C;
+  --md-sys-color-on-tertiary-dark: #422D00;
+  --md-sys-color-tertiary-container-dark: #5C4300;
+  --md-sys-color-on-tertiary-container-dark: #F9DEDC;
+  --md-sys-color-surface-container-lowest-dark: #141211;
+  --md-sys-color-surface-container-low-dark: #1C1B1A;
+  --md-sys-color-surface-container-dark: #201F1E;
+  --md-sys-color-surface-container-high-dark: #2A2928;
+  --md-sys-color-surface-container-highest-dark: #353433;
+  --md-sys-color-on-surface-dark: #E6E1E0;
+  --md-sys-color-on-surface-variant-dark: #C4C6C5;
+  --md-sys-color-outline-dark: #8E908E;
+  --md-sys-color-outline-variant-dark: #444746;
+}
+
+/* ============================================================================
+   MATERIAL 3 COLOR THEMES - ORANGE
+   ============================================================================ */
+
+html[data-theme="m3-orange"] {
+  --seed-color: #8C5100;
+  --md-sys-color-primary-light-rgb: 140, 81, 0;
+  --md-sys-color-primary-light: #8C5100;
+  --md-sys-color-on-primary-light: #FFFFFF;
+  --md-sys-color-primary-container-light: #FFDDBA;
+  --md-sys-color-on-primary-container-light: #2D1600;
+  --md-sys-color-secondary-light: #755A44;
+  --md-sys-color-on-secondary-light: #FFFFFF;
+  --md-sys-color-secondary-container-light: #FFDDBA;
+  --md-sys-color-on-secondary-container-light: #2B1807;
+  --md-sys-color-tertiary-light: #616133;
+  --md-sys-color-on-tertiary-light: #FFFFFF;
+  --md-sys-color-tertiary-container-light: #E7E6AD;
+  --md-sys-color-on-tertiary-container-light: #1D1D00;
+  --md-sys-color-surface-container-lowest-light: #FFFFFF;
+  --md-sys-color-surface-container-low-light: #F9F3ED;
+  --md-sys-color-surface-container-light: #F3EEE7;
+  --md-sys-color-surface-container-high-light: #E8E3DC;
+  --md-sys-color-surface-container-highest-light: #E2DED6;
+  --md-sys-color-on-surface-light: #1C1B19;
+  --md-sys-color-on-surface-variant-light: #44473D;
+  --md-sys-color-outline-light: #74776B;
+  --md-sys-color-outline-variant-light: #C4C7B9;
+  --md-sys-color-primary-dark-rgb: 255, 185, 102;
+  --md-sys-color-primary-dark: #FFB966;
+  --md-sys-color-on-primary-dark: #4A2800;
+  --md-sys-color-primary-container-dark: #6A3C00;
+  --md-sys-color-on-primary-container-dark: #FFDDBA;
+  --md-sys-color-secondary-dark: #E5BF9F;
+  --md-sys-color-on-secondary-dark: #422C19;
+  --md-sys-color-secondary-container-dark: #5B422E;
+  --md-sys-color-on-secondary-container-dark: #FFDDBA;
+  --md-sys-color-tertiary-dark: #CAC993;
+  --md-sys-color-on-tertiary-dark: #323209;
+  --md-sys-color-tertiary-container-dark: #49491E;
+  --md-sys-color-on-tertiary-container-dark: #E7E6AD;
+  --md-sys-color-surface-container-lowest-dark: #14120E;
+  --md-sys-color-surface-container-low-dark: #1C1B19;
+  --md-sys-color-surface-container-dark: #201F1D;
+  --md-sys-color-surface-container-high-dark: #2A2927;
+  --md-sys-color-surface-container-highest-dark: #353432;
+  --md-sys-color-on-surface-dark: #E6E2DE;
+  --md-sys-color-on-surface-variant-dark: #C4C7B9;
+  --md-sys-color-outline-dark: #8E9184;
+  --md-sys-color-outline-variant-dark: #44473D;
+}
+
+/* ============================================================================
+   MATERIAL 3 COLOR THEMES - AMOLED
+   ============================================================================ */
+
+html[data-theme="m3-amoled"] {
+  --seed-color: #6750A4;
+  --md-sys-color-primary-dark-rgb: 208, 188, 255;
+  --md-sys-color-primary-dark: #D0BCFF;
+  --md-sys-color-on-primary-dark: #381E72;
+  --md-sys-color-primary-container-dark: #4F378B;
+  --md-sys-color-on-primary-container-dark: #EADDFF;
+  --md-sys-color-secondary-dark: #CCC2DC;
+  --md-sys-color-on-secondary-dark: #332D41;
+  --md-sys-color-secondary-container-dark: #4A4458;
+  --md-sys-color-on-secondary-container-dark: #E8DEF8;
+  --md-sys-color-tertiary-dark: #EFB8C8;
+  --md-sys-color-on-tertiary-dark: #492532;
+  --md-sys-color-tertiary-container-dark: #633B48;
+  --md-sys-color-on-tertiary-container-dark: #FFD8E4;
+  --md-sys-color-surface-container-lowest-dark: #000000;
+  --md-sys-color-surface-container-low-dark: #100e14;
+  --md-sys-color-surface-container-dark: #1A181F;
+  --md-sys-color-surface-container-high-dark: #242229;
+  --md-sys-color-surface-container-highest-dark: #2F2D34;
+  --md-sys-color-on-surface-dark: #E6E0E9;
+  --md-sys-color-on-surface-variant-dark: #CAC4D0;
+  --md-sys-color-outline-dark: #938F99;
+  --md-sys-color-outline-variant-dark: #49454F;
+}
+
+/* ============================================================================
+   THEME MODE APPLICATION - LIGHT
+   ============================================================================ */
+
+.light {
+  --primary: var(--md-sys-color-primary-light);
+  --on-primary: var(--md-sys-color-on-primary-light);
+  --primary-container: var(--md-sys-color-primary-container-light);
+  --on-primary-container: var(--md-sys-color-on-primary-container-light);
+  --secondary: var(--md-sys-color-secondary-light);
+  --on-secondary: var(--md-sys-color-on-secondary-light);
+  --secondary-container: var(--md-sys-color-secondary-container-light);
+  --on-secondary-container: var(--md-sys-color-on-secondary-container-light);
+  --tertiary: var(--md-sys-color-tertiary-light);
+  --on-tertiary: var(--md-sys-color-on-tertiary-light);
+  --tertiary-container: var(--md-sys-color-tertiary-container-light);
+  --on-tertiary-container: var(--md-sys-color-on-tertiary-container-light);
+  --surface-container-lowest: var(--md-sys-color-surface-container-lowest-light);
+  --surface-container-low: var(--md-sys-color-surface-container-low-light);
+  --surface-container: var(--md-sys-color-surface-container-light);
+  --surface-container-high: var(--md-sys-color-surface-container-high-light);
+  --surface-container-highest: var(--md-sys-color-surface-container-highest-light);
+  --on-surface: var(--md-sys-color-on-surface-light);
+  --on-surface-variant: var(--md-sys-color-on-surface-variant-light);
+  --outline: var(--md-sys-color-outline-light);
+  --outline-variant: var(--md-sys-color-outline-variant-light);
+  --surface-tint-color-rgb: var(--md-sys-color-primary-light-rgb);
+}
+
+/* ============================================================================
+   THEME MODE APPLICATION - DARK
+   ============================================================================ */
+
+.dark {
+  --primary: var(--md-sys-color-primary-dark);
+  --on-primary: var(--md-sys-color-on-primary-dark);
+  --primary-container: var(--md-sys-color-primary-container-dark);
+  --on-primary-container: var(--md-sys-color-on-primary-container-dark);
+  --secondary: var(--md-sys-color-secondary-dark);
+  --on-secondary: var(--md-sys-color-on-secondary-dark);
+  --secondary-container: var(--md-sys-color-secondary-container-dark);
+  --on-secondary-container: var(--md-sys-color-on-secondary-container-dark);
+  --tertiary: var(--md-sys-color-tertiary-dark);
+  --on-tertiary: var(--md-sys-color-on-tertiary-dark);
+  --tertiary-container: var(--md-sys-color-tertiary-container-dark);
+  --on-tertiary-container: var(--md-sys-color-on-tertiary-container-dark);
+  --surface-container-lowest: var(--md-sys-color-surface-container-lowest-dark);
+  --surface-container-low: var(--md-sys-color-surface-container-low-dark);
+  --surface-container: var(--md-sys-color-surface-container-dark);
+  --surface-container-high: var(--md-sys-color-surface-container-high-dark);
+  --surface-container-highest: var(--md-sys-color-surface-container-highest-dark);
+  --on-surface: var(--md-sys-color-on-surface-dark);
+  --on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
+  --outline: var(--md-sys-color-outline-dark);
+  --outline-variant: var(--md-sys-color-outline-variant-dark);
+  --surface-tint-color-rgb: var(--md-sys-color-primary-dark-rgb);
+}
+
+/**
+ * AMOLED mode override - Pure black backgrounds for OLED displays
+ */
+.amoled.dark {
+  --surface-container-lowest: #000000;
+  --surface-container-low: #000000;
+}
+
+/* ============================================================================
+   BASE STYLES
+   ============================================================================ */
+
+/**
+ * Body element - Base application styles
+ * Includes font smoothing, safe area insets for mobile devices
+ */
+body {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--m3-duration-medium) var(--m3-easing-emphasized);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  background-color: var(--surface-container-low);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ============================================================================
+   MATERIAL 3 TYPE SCALE
+   ============================================================================ */
+
+/**
+ * Display Large - Largest text style for hero content
+ */
+.type-display-large {
+  font-size: 57px;
+  line-height: 64px;
+  font-weight: 400;
+  letter-spacing: -0.25px;
+}
+
+/**
+ * Headline Medium - Section headers and important titles
+ */
+.type-headline-medium {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+/**
+ * Title Medium - Card titles and list headers
+ */
+.type-title-medium {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+/**
+ * Body Large - Primary body text
+ */
+.type-body-large {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/**
+ * Label Large - Button text and emphasized labels
+ */
+.type-label-large {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+/* ============================================================================
+   MATERIAL 3 COMPONENTS
+   ============================================================================ */
+
+/**
+ * M3 Card - Elevated surface with theme-aware styling
+ * Light mode: Border outline
+ * Dark mode: Surface tint overlay
+ */
+.m3-card {
+  transition: background-color var(--m3-duration-short) var(--m3-easing-emphasized);
+  will-change: background-color;
+}
+
+.light .m3-card {
+  border: 1px solid var(--outline-variant);
+}
+
+.dark .m3-card {
+  background-image: linear-gradient(rgba(var(--surface-tint-color-rgb, 208, 188, 255), 0.08), rgba(var(--surface-tint-color-rgb, 208, 188, 255), 0.08));
+}
+
+/* ============================================================================
+   INTERACTIVE ELEMENTS & RIPPLE EFFECT
+   ============================================================================ */
+
+/**
+ * Interactive element container for ripple effect
+ */
+.interactive {
+  position: relative;
+  overflow: hidden;
+}
+
+/**
+ * Material ripple effect animation
+ * Triggered on click for tactile feedback
+ */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: var(--on-surface);
+  animation: ripple-animation 0.6s var(--m3-easing-emphasized);
+  transform: scale(0);
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   TOP APP BAR
+   ============================================================================ */
+
+/**
+ * Top app bar with dynamic sizing
+ * Transitions between compact (56px) and large (96px) based on scroll
+ */
+#top-app-bar {
+  will-change: height, background-color;
+  transition: background-color var(--m3-duration-short) var(--m3-easing-emphasized), height var(--m3-duration-short) var(--m3-easing-emphasized);
+  height: 56px;
+}
+
+#top-app-bar.is-large {
+  height: 96px;
+  background-color: transparent !important;
+}
+
+/**
+ * App bar title with responsive sizing
+ */
+#app-bar-title {
+  will-change: font-size;
+  transition: font-size var(--m3-duration-short) var(--m3-easing-emphasized);
+  font-size: 22px;
+}
+
+#top-app-bar.is-large #app-bar-title {
+  font-size: 28px;
+}
+
+/* ============================================================================
+   MODAL ANIMATIONS
+   ============================================================================ */
+
+/**
+ * Modal and search view base styles
+ */
+#settings-modal,
+#search-view {
+  will-change: opacity;
+}
+
+#settings-content-wrapper {
+  will-change: transform;
+}
+
+/**
+ * Slide animations for bottom sheets
+ */
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/**
+ * Settings modal animations
+ */
+#settings-modal.is-active .settings-content {
+  transform: translateY(0);
+  animation: slideInUp var(--m3-duration-medium) var(--m3-easing-emphasized);
+}
+
+#settings-modal.is-closing .settings-content {
+  transform: translateY(100%);
+  animation: slideOutDown var(--m3-duration-medium) var(--m3-easing-emphasized);
+}
+
+/**
+ * AI modal animations
+ */
+#ai-modal.is-active #ai-modal-content-wrapper {
+  transform: translateY(0);
+  animation: slideInUp var(--m3-duration-medium) var(--m3-easing-emphasized);
+}
+
+#ai-modal.is-closing #ai-modal-content-wrapper {
+  transform: translateY(100%);
+  animation: slideOutDown var(--m3-duration-medium) var(--m3-easing-emphasized);
+}
+
+/**
+ * Fade out animation for conversation container
+ */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+#gemini-conversation-container.is-fading-out {
+  animation: fadeOut 300ms ease-in-out;
+}
+
+/* ============================================================================
+   SEARCH VIEW
+   ============================================================================ */
+
+/**
+ * Full-screen search view with slide-up animation
+ */
+#search-view {
+  transition: opacity var(--m3-duration-short) var(--m3-easing-emphasized), transform var(--m3-duration-short) var(--m3-easing-emphasized);
+  transform: translateY(20px);
+}
+
+#search-view.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/**
+ * Hide main content when search is active
+ */
+body.search-active #main-scroll-container,
+body.search-active #top-app-bar {
+  display: none;
+}
+
+/* ============================================================================
+   SCROLLBAR STYLING
+   ============================================================================ */
+
+/**
+ * Custom scrollbar for all scrollable elements
+ * Thin, theme-aware design
+ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--outline-variant) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px 0;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--outline-variant);
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  min-height: 40px;
+  max-height: 80px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--outline);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/**
+ * Specific scrollbar sizing for main containers
+ */
+#main-scroll-container::-webkit-scrollbar-thumb,
+#hourly-forecast-container::-webkit-scrollbar-thumb,
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  min-height: 30px;
+}
+
+/* ============================================================================
+   MARKDOWN CONTENT STYLING
+   ============================================================================ */
+
+/**
+ * Markdown headings in AI responses
+ */
+#gemini-response h1,
+#gemini-response h2,
+#gemini-response h3 {
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  color: var(--on-surface);
+}
+
+#gemini-response h1 {
+  font-size: 1.5em;
+}
+
+#gemini-response h2 {
+  font-size: 1.3em;
+}
+
+#gemini-response h3 {
+  font-size: 1.1em;
+}
+
+/**
+ * Markdown paragraphs
+ */
+#gemini-response p {
+  margin-bottom: 1em;
+  color: var(--on-surface);
+}
+
+/**
+ * Markdown lists
+ */
+#gemini-response ul,
+#gemini-response ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+  color: var(--on-surface);
+}
+
+#gemini-response li {
+  margin-bottom: 0.5em;
+}
+
+/**
+ * Inline code styling
+ */
+#gemini-response code {
+  background-color: var(--surface-container-high);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+/**
+ * Code blocks
+ */
+#gemini-response pre {
+  background-color: var(--surface-container-high);
+  padding: 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+#gemini-response pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/**
+ * Text formatting
+ */
+#gemini-response strong {
+  font-weight: 500;
+}
+
+#gemini-response em {
+  font-style: italic;
+}
+
+#gemini-response a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   AI CHAT INTERFACE
+   ============================================================================ */
+
+/**
+ * Follow-up question buttons container
+ */
+#gemini-follow-up {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/**
+ * Typing cursor animation for streaming responses
+ */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: var(--primary);
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/**
+ * Message bubble base styles
+ */
+.message-bubble {
+  margin-bottom: 1rem;
+}
+
+/**
+ * User message animation - slides in from right
+ */
+.user-message {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/**
+ * Assistant message animation - slides in from left
+ */
+.assistant-message {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Message content formatting
+ */
+.message-content p {
+  margin-bottom: 0.5rem;
+}
+
+.message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.message-content ul,
+.message-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-content li {
+  margin-bottom: 0.25rem;
+}
+
+/**
+ * Code styling within messages
+ */
+.message-content code {
+  background-color: var(--surface-container-highest);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875em;
+}
+
+.message-content pre {
+  background-color: var(--surface-container-highest);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.message-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* ============================================================================
+   INTERACTIVE ELEMENTS
+   ============================================================================ */
+
+/**
+ * Quick prompt button hover effect
+ */
+.quick-prompt-btn:hover {
+  background-color: var(--surface-container-highest);
+  transition: background-color 0.2s ease;
+}
+
+/**
+ * Smooth scrolling for conversation area
+ */
+#conversation-scroll-area {
+  scroll-behavior: smooth;
+}
+
+/**
+ * Textarea focus styling
+ */
+#ai-input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/**
+ * Hide scrollbar for quick prompts horizontal scroll
+ */
+#quick-prompts-container > div {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#quick-prompts-container > div::-webkit-scrollbar {
+  display: none;
+}
