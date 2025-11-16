@@ -85,6 +85,7 @@
   
   <!-- Custom Styles -->
   <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/message-styles.css">
   
   <!-- Tailwind Configuration -->
   <script>
@@ -369,90 +370,87 @@
     <div id="ai-modal-overlay" class="absolute inset-0 bg-black/30 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
     
     <!-- Modal Content -->
-    <div id="ai-modal-content-wrapper" class="w-full rounded-t-3xl shadow-2xl transform translate-y-full pointer-events-auto max-h-[85vh] bg-surface-container-low">
+    <div id="ai-modal-content-wrapper" class="w-full rounded-t-3xl shadow-2xl transform translate-y-full pointer-events-auto max-h-[90vh] bg-surface-container-low">
       <!-- Drag Handle -->
-      <div class="w-10 h-1.5 bg-outline mx-auto rounded-full my-2"></div>
+      <div class="w-10 h-1 bg-outline mx-auto rounded-full my-2"></div>
       
-      <div class="flex flex-col max-h-[calc(85vh-2rem)]">
+      <div class="flex flex-col max-h-[calc(90vh-1rem)]">
         
         <!-- Header -->
-        <div class="flex-shrink-0 p-4 pb-0">
-          <div class="flex items-center justify-between px-2 mb-3">
+        <div class="flex-shrink-0 px-4 pt-2 pb-3">
+          <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                <span class="material-symbols-outlined text-on-primary !text-xl">auto_awesome</span>
+              <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-on-primary !text-lg">auto_awesome</span>
               </div>
               <div>
-                <h2 class="type-title-large text-on-surface">Ask Gemini</h2>
-                <p class="type-label-small text-on-surface-variant">Powered by Gemini 2.5 Flash</p>
+                <h2 class="type-title-medium text-on-surface">Ask Gemini</h2>
               </div>
             </div>
-            <div class="flex items-center gap-1">
+            <div class="flex items-center gap-0">
               <!-- New Conversation Button -->
-              <button id="ai-clear-btn" class="interactive w-10 h-10 flex items-center justify-center rounded-full" title="New conversation" aria-label="Start new conversation">
-                <span class="material-symbols-outlined text-on-surface-variant !text-xl">add</span>
+              <button id="ai-clear-btn" class="interactive w-9 h-9 flex items-center justify-center rounded-full" title="New conversation" aria-label="Start new conversation">
+                <span class="material-symbols-outlined text-on-surface-variant !text-lg">add</span>
               </button>
               <!-- Close Button -->
-              <button id="ai-modal-close-btn" class="interactive w-10 h-10 flex items-center justify-center rounded-full" aria-label="Close AI assistant">
-                <span class="material-symbols-outlined text-on-surface-variant !text-xl">close</span>
+              <button id="ai-modal-close-btn" class="interactive w-9 h-9 flex items-center justify-center rounded-full" aria-label="Close AI assistant">
+                <span class="material-symbols-outlined text-on-surface-variant !text-lg">close</span>
               </button>
             </div>
           </div>
         </div>
         
         <!-- Conversation Area -->
-        <div class="flex-1 overflow-y-auto px-6 pb-4" id="conversation-scroll-area">
+        <div class="flex-1 overflow-y-auto px-4 py-2" id="conversation-scroll-area">
           
           <!-- Welcome Message -->
-          <div id="ai-welcome-message" class="text-center py-8">
-            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span class="material-symbols-outlined text-primary !text-4xl">partly_cloudy_day</span>
+          <div id="ai-welcome-message" class="text-center py-6">
+            <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <span class="material-symbols-outlined text-primary !text-3xl">partly_cloudy_day</span>
             </div>
-            <h3 class="type-title-medium text-on-surface mb-2">Ask me anything about the weather</h3>
-            <p class="type-body-medium text-on-surface-variant max-w-sm mx-auto">
-              I can help you plan your day, suggest what to wear, or answer any weather-related questions.
+            <h3 class="type-title-medium text-on-surface mb-2">Ask me about the weather</h3>
+            <p class="type-body-medium text-on-surface-variant max-w-xs mx-auto text-sm">
+              I can help you plan your day or answer weather questions.
             </p>
           </div>
           
           <!-- Conversation Container (populated dynamically) -->
-          <div id="gemini-conversation-container" class="hidden space-y-4"></div>
+          <div id="gemini-conversation-container" class="hidden space-y-3"></div>
         </div>
         
         <!-- Input Area -->
-        <div class="flex-shrink-0 p-4 pt-2 border-t border-outline-variant">
-          <div class="px-2">
-            
-            <!-- Quick Prompts -->
-            <div id="quick-prompts-container" class="mb-3">
-              <div class="flex gap-2 overflow-x-auto">
-                <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-2 bg-surface-container-high rounded-full type-label-medium text-on-surface flex items-center gap-1.5" data-prompt="What should I wear today?">
-                  <span class="material-symbols-outlined !text-base">checkroom</span>
-                  What to wear?
-                </button>
-                <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-2 bg-surface-container-high rounded-full type-label-medium text-on-surface flex items-center gap-1.5" data-prompt="Will it rain today?">
-                  <span class="material-symbols-outlined !text-base">rainy</span>
-                  Will it rain?
-                </button>
-                <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-2 bg-surface-container-high rounded-full type-label-medium text-on-surface flex items-center gap-1.5" data-prompt="Compare today with tomorrow">
-                  <span class="material-symbols-outlined !text-base">compare_arrows</span>
-                  Compare
-                </button>
-              </div>
-            </div>
-            
-            <!-- Message Input -->
-            <div class="flex items-center gap-2">
-              <textarea 
-                id="ai-input" 
-                rows="1" 
-                placeholder="Ask about the weather..." 
-                class="type-body-large flex-1 h-12 bg-surface-container-high px-4 py-3 rounded-2xl focus:outline-none resize-none overflow-hidden"
-                maxlength="500"
-              ></textarea>
-              <button id="ai-send-btn" class="interactive w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-primary text-on-primary transition-all duration-200 disabled:opacity-50 disabled:bg-surface-container" disabled aria-label="Send message">
-                <span class="material-symbols-outlined">send</span>
+        <div class="flex-shrink-0 px-4 pb-3 pt-2 border-t border-outline-variant">
+          
+          <!-- Quick Prompts -->
+          <div id="quick-prompts-container" class="mb-2">
+            <div class="flex gap-2 overflow-x-auto pb-1">
+              <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-1.5 bg-surface-container-high rounded-full type-label-small text-on-surface flex items-center gap-1.5" data-prompt="What should I wear today?">
+                <span class="material-symbols-outlined !text-sm">checkroom</span>
+                What to wear?
+              </button>
+              <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-1.5 bg-surface-container-high rounded-full type-label-small text-on-surface flex items-center gap-1.5" data-prompt="Will it rain today?">
+                <span class="material-symbols-outlined !text-sm">rainy</span>
+                Will it rain?
+              </button>
+              <button class="quick-prompt-btn interactive flex-shrink-0 px-3 py-1.5 bg-surface-container-high rounded-full type-label-small text-on-surface flex items-center gap-1.5" data-prompt="Compare today with tomorrow">
+                <span class="material-symbols-outlined !text-sm">compare_arrows</span>
+                Compare
               </button>
             </div>
+          </div>
+          
+          <!-- Message Input -->
+          <div class="flex items-center gap-2">
+            <textarea 
+              id="ai-input" 
+              rows="1" 
+              placeholder="Ask about the weather..." 
+              class="type-body-medium flex-1 h-10 bg-surface-container-high px-3 py-2 rounded-xl focus:outline-none resize-none overflow-hidden text-sm"
+              maxlength="500"
+            ></textarea>
+            <button id="ai-send-btn" class="interactive w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-primary text-on-primary transition-all duration-200 disabled:opacity-50 disabled:bg-surface-container" disabled aria-label="Send message">
+              <span class="material-symbols-outlined !text-xl">send</span>
+            </button>
           </div>
         </div>
       </div>
